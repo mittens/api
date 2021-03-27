@@ -4,11 +4,11 @@ declare namespace NodeJS {
 
     REDIS_URL: string
 
-    GITHUB_ID: string
-    GITHUB_SECRET: string
-
     FIREBASE_CLIENT_EMAIL: string
     FIREBASE_PRIVATE_KEY: string
     FIREBASE_PROJECT_ID: string
+
+    GITHUB_CLIENT_ID: string
+    GITHUB_CLIENT_SECRET: string
   }
 }

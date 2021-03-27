@@ -1,4 +1,4 @@
-const { GITHUB_ID, GITHUB_SECRET } = process.env
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env
 
 import axios from 'axios'
 import { isAfter } from 'date-fns'
@@ -23,8 +23,8 @@ export class GitHubService {
         accept: 'application/json'
       },
       params: {
-        client_id: GITHUB_ID,
-        client_secret: GITHUB_SECRET,
+        client_id: GITHUB_CLIENT_ID,
+        client_secret: GITHUB_CLIENT_SECRET,
         code
       },
       url: 'https://github.com/login/oauth/access_token'
