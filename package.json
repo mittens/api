@@ -6,7 +6,7 @@
     "db": "prisma migrate dev",
     "dev": "env-cmd ts-node-dev --respawn --transpile-only --files src/index.ts",
     "lint": "eslint src --ext ts",
-    "migrate": "prisma migrate deploy",
+    "migrate": "env-cmd -f .env.production prisma migrate deploy",
     "prepare": "husky install",
     "start": "node dist/index.js"
   },

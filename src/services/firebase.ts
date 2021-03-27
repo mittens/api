@@ -14,10 +14,14 @@ import { Notification } from '../types'
 export class FirebaseService {
   constructor() {
     if (admin.apps.length === 0) {
+      const privateKey = Buffer.from(FIREBASE_PRIVATE_KEY, 'base64').toString(
+        'utf8'
+      )
+
       admin.initializeApp({
         credential: admin.credential.cert({
           clientEmail: FIREBASE_CLIENT_EMAIL,
-          privateKey: FIREBASE_PRIVATE_KEY,
+          privateKey,
           projectId: FIREBASE_PROJECT_ID
         })
       })
