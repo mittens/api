@@ -81,7 +81,7 @@ export class AuthService {
           }
         }
       },
-      select: {
+      include: {
         clients: true
       },
       where: {
@@ -90,9 +90,7 @@ export class AuthService {
     })
 
     if (user.clients.length === 0) {
-      const job = await queue.getJob(`user-${id}`)
-
-      await job?.remove()
+      await queue.removeRepeatableByKey(`fetch:user-${user.id}:::60000`)
     }
 
     return true
