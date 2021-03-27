@@ -6,6 +6,7 @@ import Redis from 'ioredis'
 
 import { db } from '.'
 import { FirebaseService, GitHubService } from './services'
+import { JobData } from './types'
 
 const connection = new Redis(REDIS_URL)
 
@@ -21,7 +22,7 @@ export const worker = (): void => {
   const firebase = new FirebaseService()
   const github = new GitHubService()
 
-  new Worker(
+  new Worker<JobData>(
     QUEUE_NAME,
     async ({ data }) => {
       const { userId } = data

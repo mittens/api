@@ -13,6 +13,12 @@ export type IntegrationContext = {
   reply: FastifyReply
 }
 
+// jobs
+
+export type JobData = {
+  userId: number
+}
+
 // github
 
 export type GitHubAuthResponse = {
