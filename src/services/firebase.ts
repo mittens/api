@@ -33,8 +33,8 @@ export class FirebaseService {
     notifications: Notification[]
   ): Promise<void> {
     const messages: messaging.Message[] = clients
-      .map((client) =>
-        notifications.map((notification) => ({
+      .map(client =>
+        notifications.map(notification => ({
           android: {
             collapseKey: notification.id
           },
