@@ -2,7 +2,7 @@ const { PORT } = process.env
 
 import { ApolloServer } from 'apollo-server-fastify'
 import { router } from 'bull-board'
-import fastify from 'fastify'
+import fastify, { FastifyInstance } from 'fastify'
 import express from 'fastify-express'
 import { buildSchema } from 'type-graphql'
 import { Container } from 'typedi'
@@ -11,7 +11,7 @@ import { authChecker, getUser } from './lib'
 import { resolvers } from './resolver'
 import { Context, IntegrationContext } from './types'
 
-export const server = async (): Promise<void> => {
+export const createServer = async (): Promise<FastifyInstance> => {
   const schema = await buildSchema({
     authChecker,
     container: Container,
@@ -40,4 +40,6 @@ export const server = async (): Promise<void> => {
   await server.listen(Number(PORT), '0.0.0.0')
 
   console.log(`Running on ${PORT}`)
+
+  return server
 }

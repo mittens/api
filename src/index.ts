@@ -2,10 +2,21 @@ import 'reflect-metadata'
 
 import { PrismaClient } from '@prisma/client'
 
-import { worker } from './queue'
-import { server } from './server'
+import { createWorker } from './queue'
+import { createServer } from './server'
 
 export const db = new PrismaClient()
 
-server()
-worker()
+const main = async (): Promise<void> => {
+  const server = await createServer()
+  const worker = createWorker()
+
+  process.on('SIGTERM', async () => {
+    await server.close()
+    await worker.close()
+
+    process.exit(0)
+  })
+}
+
+main()

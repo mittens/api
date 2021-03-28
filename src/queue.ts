@@ -18,11 +18,11 @@ export const queue = new Queue(QUEUE_NAME, {
 
 setQueues([new BullMQAdapter(queue)])
 
-export const worker = (): void => {
+export const createWorker = (): Worker => {
   const firebase = new FirebaseService()
   const github = new GitHubService()
 
-  new Worker<JobData>(
+  return new Worker<JobData>(
     QUEUE_NAME,
     async ({ data }) => {
       const { userId } = data
