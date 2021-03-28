@@ -1,5 +1,6 @@
 const { TOKEN_SECRET } = process.env
 
+import { Prisma } from '@prisma/client'
 import { User } from '@prisma/client'
 import { sign } from 'jsonwebtoken'
 import { Inject, Service } from 'typedi'
@@ -27,23 +28,28 @@ export class AuthService {
   }: SignInInput): Promise<AuthResult> {
     const profile = await this.github.getUser(githubToken)
 
+    const clients: Prisma.ClientCreateOrConnectWithoutUserInput = {
+      create: {
+        id: deviceId,
+        token: pushToken
+      },
+      where: {
+        id: deviceId
+      }
+    }
+
     const user = await db.user.upsert({
       create: {
         clients: {
-          connectOrCreate: {
-            create: {
-              id: deviceId,
-              token: pushToken
-            },
-            where: {
-              id: deviceId
-            }
-          }
+          connectOrCreate: clients
         },
         id: profile.id,
         token: githubToken
       },
       update: {
+        clients: {
+          connectOrCreate: clients
+        },
         fetchedAt: new Date()
       },
       where: {
